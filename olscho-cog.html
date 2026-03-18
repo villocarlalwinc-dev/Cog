@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Certificate of Grades | OLScho</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --navy: #0b1f3a;
+      --gold: #c9a84c;
+      --gold-light: #f0d27a;
+      --cream: #fdf8ee;
+      --slate: #3d5a80;
+      --text: #1a2a3a;
+      --muted: #6b7f92;
+      --white: #ffffff;
+      --border: rgba(201,168,76,0.25);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ── HERO ── */
+    header {
+      background: var(--navy);
+      position: relative;
+      overflow: hidden;
+      padding: 0;
+    }
+
+    .header-pattern {
+      position: absolute; inset: 0;
+      background-image:
+        repeating-linear-gradient(45deg, rgba(201,168,76,.04) 0px, rgba(201,168,76,.04) 1px, transparent 1px, transparent 40px),
+        repeating-linear-gradient(-45deg, rgba(201,168,76,.04) 0px, rgba(201,168,76,.04) 1px, transparent 1px, transparent 40px);
+      pointer-events: none;
+    }
+
+    .header-glow {
+      position: absolute;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(201,168,76,.12) 0%, transparent 70%);
+      top: -150px; left: 50%;
+      transform: translateX(-50%);
+      pointer-events: none;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 4rem;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      z-index: 10;
+    }
+
+    .logo {
+      display: flex; align-items: center; gap: .75rem;
+    }
+    .logo-seal {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      border: 2px solid var(--gold);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: .85rem; font-weight: 700;
+      color: var(--gold);
+      letter-spacing: .05em;
+    }
+    .logo-text { color: var(--white); }
+    .logo-text span { display: block; }
+    .logo-text .main { font-weight: 600; font-size: 1rem; }
+    .logo-text .sub { font-size: .7rem; color: rgba(255,255,255,.5); text-transform: uppercase; letter-spacing: .12em; }
+
+    nav ul { list-style: none; display: flex; gap: 2rem; }
+    nav a {
+      color: rgba(255,255,255,.7);
+      text-decoration: none;
+      font-size: .875rem;
+      font-weight: 500;
+      letter-spacing: .03em;
+      transition: color .2s;
+    }
+    nav a:hover { color: var(--gold); }
+
+    .nav-cta {
+      background: var(--gold);
+      color: var(--navy) !important;
+      padding: .5rem 1.25rem;
+      border-radius: 4px;
+      font-weight: 600 !important;
+      transition: background .2s !important;
+    }
+    .nav-cta:hover { background: var(--gold-light) !important; color: var(--navy) !important; }
+
+    .hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 6rem 2rem 7rem;
+      position: relative; z-index: 2;
+    }
+
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: rgba(201,168,76,.12);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: .4rem 1rem;
+      font-size: .75rem;
+      color: var(--gold-light);
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      margin-bottom: 1.75rem;
+      animation: fadeDown .6s ease both;
+    }
+    .hero-badge::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: var(--gold);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%,100% { opacity: 1; }
+      50% { opacity: .4; }
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      font-weight: 900;
+      color: var(--white);
+      line-height: 1.1;
+      max-width: 780px;
+      animation: fadeDown .7s .1s ease both;
+    }
+    h1 em {
+      font-style: normal;
+      color: var(--gold);
+    }
+
+    .hero-sub {
+      color: rgba(255,255,255,.6);
+      font-size: 1.1rem;
+      max-width: 520px;
+      margin: 1.5rem auto 0;
+      line-height: 1.7;
+      animation: fadeDown .7s .2s ease both;
+    }
+
+    .hero-actions {
+      display: flex; gap: 1rem;
+      margin-top: 2.75rem;
+      animation: fadeDown .7s .3s ease both;
+    }
+
+    .btn-primary {
+      background: var(--gold);
+      color: var(--navy);
+      padding: .85rem 2rem;
+      border-radius: 5px;
+      font-weight: 600; font-size: .95rem;
+      text-decoration: none;
+      transition: background .2s, transform .15s;
+      box-shadow: 0 4px 24px rgba(201,168,76,.35);
+    }
+    .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+
+    .btn-outline {
+      border: 1px solid rgba(255,255,255,.25);
+      color: var(--white);
+      padding: .85rem 2rem;
+      border-radius: 5px;
+      font-weight: 500; font-size: .95rem;
+      text-decoration: none;
+      transition: border-color .2s, background .2s;
+    }
+    .btn-outline:hover { border-color: var(--gold); background: rgba(201,168,76,.08); }
+
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── SCROLL RIBBON ── */
+    .ribbon {
+      background: var(--gold);
+      padding: .7rem 0;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .ribbon-track {
+      display: inline-block;
+      animation: ticker 30s linear infinite;
+      font-size: .8rem;
+      font-weight: 600;
+      color: var(--navy);
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .ribbon-track span { margin: 0 2rem; }
+    .ribbon-track .dot { opacity: .5; }
+    @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    /* ── SECTIONS ── */
+    section { padding: 5rem 4rem; }
+    section:nth-child(even) { background: var(--white); }
+
+    .section-label {
+      font-size: .75rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 600;
+      margin-bottom: .75rem;
+    }
+
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 3vw, 2.75rem);
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+
+    .section-desc {
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.75;
+      max-width: 560px;
+    }
+
+    /* ── WHAT IS COG ── */
+    .what-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .cog-card {
+      background: var(--navy);
+      border-radius: 16px;
+      padding: 2.5rem;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 24px 64px rgba(11,31,58,.18);
+    }
+    .cog-card::before {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 200px; height: 200px;
+      background: radial-gradient(circle, rgba(201,168,76,.15), transparent 70%);
+    }
+
+    .cog-header {
+      display: flex; align-items: center; gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .cog-seal {
+      width: 60px; height: 60px;
+      border: 2px solid var(--gold);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .cog-seal svg { width: 28px; height: 28px; }
+    .cog-title { color: var(--white); font-size: 1.1rem; font-weight: 600; }
+    .cog-subtitle { color: rgba(255,255,255,.45); font-size: .8rem; text-transform: uppercase; letter-spacing: .1em; }
+
+    .cog-divider {
+      height: 1px; background: var(--border); margin: 1.25rem 0;
+    }
+
+    .cog-fields {
+      display: flex; flex-direction: column; gap: .85rem;
+    }
+    .cog-field {
+      display: flex; justify-content: space-between; align-items: baseline;
+    }
+    .cog-field-label { font-size: .8rem; color: rgba(255,255,255,.45); }
+    .cog-field-value { font-size: .85rem; color: var(--white); font-weight: 500; }
+    .grade-pill {
+      display: inline-block;
+      background: rgba(201,168,76,.18);
+      color: var(--gold-light);
+      border: 1px solid rgba(201,168,76,.3);
+      border-radius: 4px;
+      padding: .15rem .55rem;
+      font-size: .8rem;
+      font-weight: 600;
+    }
+    .grade-pill.passed { background: rgba(52,199,89,.12); color: #6ee7a0; border-color: rgba(52,199,89,.25); }
+
+    .cog-stamp {
+      margin-top: 1.75rem;
+      text-align: right;
+    }
+    .cog-stamp-text {
+      font-family: 'Playfair Display', serif;
+      font-size: .75rem;
+      color: var(--gold);
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    /* ── STEPS ── */
+    .steps-section { max-width: 1100px; margin: 0 auto; }
+    .steps-header { max-width: 480px; }
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+      margin-top: 3.5rem;
+    }
+
+    .step-card {
+      background: var(--cream);
+      border: 1px solid rgba(201,168,76,.2);
+      border-radius: 12px;
+      padding: 1.75rem 1.5rem;
+      position: relative;
+      transition: transform .25s, box-shadow .25s;
+    }
+    .step-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 16px 40px rgba(11,31,58,.1);
+    }
+    .step-card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold), var(--gold-light));
+      border-radius: 12px 12px 0 0;
+      opacity: 0;
+      transition: opacity .25s;
+    }
+    .step-card:hover::after { opacity: 1; }
+
+    .step-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: rgba(201,168,76,.2);
+      line-height: 1;
+      margin-bottom: .75rem;
+    }
+    .step-icon {
+      font-size: 1.75rem;
+      margin-bottom: 1rem;
+    }
+    .step-title {
+      font-weight: 600;
+      font-size: .95rem;
+      color: var(--navy);
+      margin-bottom: .5rem;
+    }
+    .step-desc {
+      font-size: .85rem;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    /* ── REQUIREMENTS ── */
+    .req-section { max-width: 1100px; margin: 0 auto; }
+    .req-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+    .req-box {
+      background: var(--cream);
+      border-radius: 12px;
+      border: 1px solid rgba(201,168,76,.2);
+      overflow: hidden;
+    }
+    .req-box-header {
+      background: var(--navy);
+      padding: 1.1rem 1.5rem;
+      display: flex; align-items: center; gap: .75rem;
+    }
+    .req-box-header .icon { font-size: 1.2rem; }
+    .req-box-title { color: var(--white); font-weight: 600; font-size: .95rem; }
+    .req-list { padding: 1.5rem; list-style: none; display: flex; flex-direction: column; gap: .75rem; }
+    .req-list li {
+      display: flex; align-items: flex-start; gap: .75rem;
+      font-size: .875rem; color: var(--text); line-height: 1.5;
+    }
+    .req-list li::before {
+      content: '✦';
+      color: var(--gold);
+      font-size: .65rem;
+      margin-top: .2rem;
+      flex-shrink: 0;
+    }
+
+    /* ── FEES ── */
+    .fees-section { max-width: 800px; margin: 0 auto; text-align: center; }
+    .fees-section .section-label, .fees-section h2, .fees-section .section-desc {
+      text-align: center; margin-left: auto; margin-right: auto;
+    }
+    .fees-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 2.5rem;
+      font-size: .9rem;
+    }
+    .fees-table th {
+      background: var(--navy);
+      color: var(--gold);
+      text-align: left;
+      padding: 1rem 1.5rem;
+      font-size: .75rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    .fees-table th:last-child { text-align: right; }
+    .fees-table td {
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid rgba(201,168,76,.1);
+      color: var(--text);
+    }
+    .fees-table td:last-child { text-align: right; font-weight: 600; color: var(--navy); }
+    .fees-table tr:last-child td { border-bottom: none; }
+    .fees-table tr:hover td { background: rgba(201,168,76,.04); }
+
+    /* ── CONTACT ── */
+    .contact-band {
+      background: var(--navy);
+      padding: 4rem;
+    }
+    .contact-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+    .contact-inner h2 { color: var(--white); }
+    .contact-inner .section-desc { color: rgba(255,255,255,.55); }
+    .contact-cards { display: flex; flex-direction: column; gap: 1rem; }
+    .contact-card {
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(201,168,76,.2);
+      border-radius: 10px;
+      padding: 1.25rem 1.5rem;
+      display: flex; align-items: center; gap: 1rem;
+    }
+    .contact-icon {
+      width: 40px; height: 40px;
+      background: rgba(201,168,76,.12);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+    .contact-info .label { font-size: .7rem; color: rgba(255,255,255,.4); text-transform: uppercase; letter-spacing: .1em; }
+    .contact-info .value { color: var(--white); font-size: .9rem; font-weight: 500; margin-top: .15rem; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #060f1e;
+      padding: 2rem 4rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      border-top: 1px solid rgba(201,168,76,.1);
+    }
+    footer p { color: rgba(255,255,255,.3); font-size: .8rem; }
+    footer .footer-links { display: flex; gap: 1.5rem; }
+    footer a { color: rgba(255,255,255,.4); font-size: .8rem; text-decoration: none; }
+    footer a:hover { color: var(--gold); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 1rem 1.5rem; }
+      nav ul { display: none; }
+      section { padding: 3.5rem 1.5rem; }
+      .what-grid, .req-grid, .contact-inner { grid-template-columns: 1fr; }
+      .steps-grid { grid-template-columns: 1fr 1fr; }
+      footer { padding: 1.5rem; flex-direction: column; align-items: flex-start; }
+    }
+
+    @media (max-width: 520px) {
+      .steps-grid { grid-template-columns: 1fr; }
+      .hero-actions { flex-direction: column; width: 100%; }
+      .btn-primary, .btn-outline { text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── HEADER ── -->
+<header>
+  <div class="header-pattern"></div>
+  <div class="header-glow"></div>
+
+  <nav>
+    <div class="logo">
+      <div class="logo-seal">OL</div>
+      <div class="logo-text">
+        <span class="main">OLScho</span>
+        <span class="sub">Registrar's Office</span>
+      </div>
+    </div>
+    <ul>
+      <li><a href="#about">About COG</a></li>
+      <li><a href="#steps">How to Request</a></li>
+      <li><a href="#requirements">Requirements</a></li>
+      <li><a href="#fees">Fees</a></li>
+      <li><a href="#contact" class="nav-cta">Contact Us</a></li>
+    </ul>
+  </nav>
+
+  <div class="hero">
+    <div class="hero-badge">📋 Office of the Registrar</div>
+    <h1>Certificate of <em>Grades</em></h1>
+    <p class="hero-sub">Your official academic record, issued by OLScho's Registrar's Office. Request yours quickly, securely, and hassle-free.</p>
+    <div class="hero-actions">
+      <a href="#steps" class="btn-primary">Request Now</a>
+      <a href="#about" class="btn-outline">Learn More</a>
+    </div>
+  </div>
+</header>
+
+<!-- ── RIBBON ── -->
+<div class="ribbon">
+  <div class="ribbon-track">
+    <span>Certificate of Grades</span><span class="dot">◆</span>
+    <span>Official Academic Records</span><span class="dot">◆</span>
+    <span>OLScho Registrar</span><span class="dot">◆</span>
+    <span>Processing Time: 3–5 Working Days</span><span class="dot">◆</span>
+    <span>For Employment &amp; Transfer</span><span class="dot">◆</span>
+    <span>Certificate of Grades</span><span class="dot">◆</span>
+    <span>Official Academic Records</span><span class="dot">◆</span>
+    <span>OLScho Registrar</span><span class="dot">◆</span>
+    <span>Processing Time: 3–5 Working Days</span><span class="dot">◆</span>
+    <span>For Employment &amp; Transfer</span><span class="dot">◆</span>
+  </div>
+</div>
+
+<!-- ── WHAT IS COG ── -->
+<section id="about">
+  <div class="what-grid">
+    <div>
+      <div class="section-label">About the Document</div>
+      <h2>What is a Certificate of Grades?</h2>
+      <p class="section-desc" style="margin-bottom:1.25rem">
+        A <strong>Certificate of Grades (COG)</strong> is an official document issued by OLScho's Registrar's Office that lists all your subject grades per semester or academic year.
+      </p>
+      <p class="section-desc" style="margin-bottom:1.25rem">
+        It is duly signed by the Registrar and bears the school seal, making it a verified and authentic record of your academic performance.
+      </p>
+      <p class="section-desc">
+        Common uses include applications for scholarship, employment, graduate school, government examinations, and school transfers.
+      </p>
+    </div>
+
+    <!-- Sample COG Card -->
+    <div class="cog-card">
+      <div class="cog-header">
+        <div class="cog-seal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="1.5">
+            <path d="M12 2L3 7l9 5 9-5-9-5z"/><path d="M3 12l9 5 9-5"/><path d="M3 17l9 5 9-5"/>
+          </svg>
+        </div>
+        <div>
+          <div class="cog-title">OLScho</div>
+          <div class="cog-subtitle">Certificate of Grades</div>
+        </div>
+      </div>
+      <div class="cog-divider"></div>
+      <div class="cog-fields">
+        <div class="cog-field">
+          <span class="cog-field-label">Student Name</span>
+          <span class="cog-field-value">Juan dela Cruz</span>
+        </div>
+        <div class="cog-field">
+          <span class="cog-field-label">Student No.</span>
+          <span class="cog-field-value">2021-00123</span>
+        </div>
+        <div class="cog-field">
+          <span class="cog-field-label">Program</span>
+          <span class="cog-field-value">BS Information Technology</span>
+        </div>
+        <div class="cog-field">
+          <span class="cog-field-label">Semester / AY</span>
+          <span class="cog-field-value">1st Sem | 2024–2025</span>
+        </div>
+      </div>
+      <div class="cog-divider"></div>
+      <div class="cog-fields">
+        <div class="cog-field">
+          <span class="cog-field-label">IT 101 – Prog. Fundamentals</span>
+          <span class="cog-field-value"><span class="grade-pill">1.25</span></span>
+        </div>
+        <div class="cog-field">
+          <span class="cog-field-label">MATH 101 – Algebra</span>
+          <span class="cog-field-value"><span class="grade-pill">1.50</span></span>
+        </div>
+        <div class="cog-field">
+          <span class="cog-field-label">ENG 101 – Technical Writing</span>
+          <span class="cog-field-value"><span class="grade-pill">1.75</span></span>
+        </div>
+        <div class="cog-field">
+          <span class="cog-field-label">Status</span>
+          <span class="cog-field-value"><span class="grade-pill passed">PASSED</span></span>
+        </div>
+      </div>
+      <div class="cog-stamp">
+        <div class="cog-stamp-text">✦ Officially Issued by OLScho Registrar ✦</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── STEPS ── -->
+<section id="steps">
+  <div class="steps-section">
+    <div class="steps-header">
+      <div class="section-label">Process</div>
+      <h2>How to Request Your COG</h2>
+      <p class="section-desc">Simple steps to get your Certificate of Grades from OLScho's Registrar's Office.</p>
+    </div>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">01</div>
+        <div class="step-icon">📝</div>
+        <div class="step-title">Fill Out Request Form</div>
+        <p class="step-desc">Accomplish the COG Request Form available at the Registrar's Office or download it from the OLScho portal.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">02</div>
+        <div class="step-icon">📁</div>
+        <div class="step-title">Submit Requirements</div>
+        <p class="step-desc">Submit the accomplished form together with your valid school ID and any other required supporting documents.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">03</div>
+        <div class="step-icon">💳</div>
+        <div class="step-title">Pay the Processing Fee</div>
+        <p class="step-desc">Proceed to the Cashier's Office to pay the applicable fee. Keep your official receipt (OR) as proof of payment.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">04</div>
+        <div class="step-icon">📦</div>
+        <div class="step-title">Claim Your COG</div>
+        <p class="step-desc">Return to the Registrar's Office on the scheduled release date. Present your OR and valid ID to claim your document.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── REQUIREMENTS ── -->
+<section id="requirements">
+  <div class="req-section">
+    <div class="section-label">Requirements</div>
+    <h2>What You Need to Submit</h2>
+    <p class="section-desc">Ensure you have all the required documents ready before requesting to avoid delays.</p>
+    <div class="req-grid">
+      <div class="req-box">
+        <div class="req-box-header">
+          <span class="icon">🎓</span>
+          <span class="req-box-title">For Currently Enrolled Students</span>
+        </div>
+        <ul class="req-list">
+          <li>Duly accomplished COG Request Form</li>
+          <li>Valid OLScho School ID (current school year)</li>
+          <li>Official Receipt of payment from the Cashier</li>
+          <li>No existing academic or financial hold or balance</li>
+          <li>Authorization letter (if claiming through a representative)</li>
+        </ul>
+      </div>
+      <div class="req-box">
+        <div class="req-box-header">
+          <span class="icon">🏅</span>
+          <span class="req-box-title">For Alumni / Graduates</span>
+        </div>
+        <ul class="req-list">
+          <li>Accomplished COG Request Form (downloadable online)</li>
+          <li>Any valid government-issued ID with photo</li>
+          <li>Official Receipt of payment from the Cashier</li>
+          <li>Photocopy of your student clearance or graduation certificate</li>
+          <li>Authorization letter + representative's valid ID (if applicable)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FEES ── -->
+<section id="fees">
+  <div class="fees-section">
+    <div class="section-label">Schedule of Fees</div>
+    <h2>Processing Fees</h2>
+    <p class="section-desc">Below is the official schedule of fees for Certificate of Grades requests at OLScho.</p>
+    <table class="fees-table">
+      <thead>
+        <tr>
+          <th>Document Type</th>
+          <th>Processing Time</th>
+          <th>Fee (PHP)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>COG — Per Semester (Regular)</td>
+          <td>3–5 working days</td>
+          <td>₱50.00</td>
+        </tr>
+        <tr>
+          <td>COG — Per Academic Year</td>
+          <td>3–5 working days</td>
+          <td>₱80.00</td>
+        </tr>
+        <tr>
+          <td>COG — Rush (Same Day / Next Day)</td>
+          <td>Within the day</td>
+          <td>₱150.00</td>
+        </tr>
+        <tr>
+          <td>COG — With Authentication / Dry Seal</td>
+          <td>3–5 working days</td>
+          <td>₱100.00</td>
+        </tr>
+        <tr>
+          <td>COG — For Board / Bar Examinations</td>
+          <td>5–7 working days</td>
+          <td>₱100.00</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ── CONTACT ── -->
+<div class="contact-band" id="contact">
+  <div class="contact-inner">
+    <div>
+      <div class="section-label">Get in Touch</div>
+      <h2>Contact the Registrar's Office</h2>
+      <p class="section-desc">Have questions about your COG request? Reach out to us through any of the following channels.</p>
+      <br/>
+      <a href="#steps" class="btn-primary" style="display:inline-block;margin-top:.5rem">Start Your Request</a>
+    </div>
+    <div class="contact-cards">
+      <div class="contact-card">
+        <div class="contact-icon">🏢</div>
+        <div class="contact-info">
+          <div class="label">Office Location</div>
+          <div class="value">Admin Building, Room 101 — OLScho Main Campus</div>
+        </div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon">⏰</div>
+        <div class="contact-info">
+          <div class="label">Office Hours</div>
+          <div class="value">Monday – Friday &nbsp;|&nbsp; 8:00 AM – 5:00 PM</div>
+        </div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon">📞</div>
+        <div class="contact-info">
+          <div class="label">Telephone</div>
+          <div class="value">(045) 888-0000 loc. 201</div>
+        </div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon">✉️</div>
+        <div class="contact-info">
+          <div class="label">Email Address</div>
+          <div class="value">registrar@olscho.edu.ph</div>
+        </div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon">🌐</div>
+        <div class="contact-info">
+          <div class="label">Student Portal</div>
+          <div class="value">portal.olscho.edu.ph</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <p>© 2025 OLScho Registrar's Office. All rights reserved.</p>
+  <div class="footer-links">
+    <a href="#">Privacy Policy</a>
+    <a href="#">Terms of Use</a>
+    <a href="#">Data Privacy Act</a>
+    <a href="#contact">Contact</a>
+  </div>
+</footer>
+
+</body>
+</html>
